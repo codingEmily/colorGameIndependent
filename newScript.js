@@ -33,7 +33,6 @@ window.addEventListener("load", () => {
 })
 
 document.addEventListener("click", e => {   
-    // console.log(selectedDifficulty, selectedFormat)
     if (e.target.type ==='radio' || e.target.id === 'next') {
         resetForNewRound()
         setGame()
@@ -43,17 +42,14 @@ document.addEventListener("click", e => {
 
 function setGame() {
     let selectedFormat = form.elements.format.value
-    // console.log("FORMAT: ", selectedFormat)
     let selectedDifficulty = form.elements.difficulty.value
 
-    let randomWinnerId = genRandomNum(1, buttonList.length)
+    let randomWinnerId = genRandomNum(0, buttonList.length -1)
     let id = 0
 
     const arrayOfColors = fetchColorsByFormatAndLevel(selectedFormat, selectedDifficulty)
-    // console.log(arrayOfColors)
     buttonList.forEach(button => {
         button.setAttribute('data-btn-id', id)
-        // console.log(arrayOfColors)
         button.setAttribute('data-color-code', arrayOfColors[id])
         
         button.style.backgroundColor = `${button.dataset.colorCode}`
