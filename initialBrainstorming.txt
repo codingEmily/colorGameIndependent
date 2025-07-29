@@ -1,0 +1,78 @@
+
+// LOGIC
+/*
+STEP ONE: Give identification for each block based on its assigned color code
+STEP TWO: Randomly generate six color codes and assign them to the blocks
+    A. Question- How to increase or decrease "variety" between color codes?
+*/
+
+/* 
+I think you have a function that takes in 2 params: colorFormat and difficulty
+
+Within this function, depending on which colorFormat is taken in, 
+you run one of three createColorSet functions- 
+each of those functions TAKES the original difficulty param as its own param
+*/
+
+/*
+function generateColors(format, difficulty) {
+    if (format === RGB) {
+    generateSetRGB(difficulty)
+    }
+        if (format === HSL) {
+    generateSetHSL(difficulty)
+    }
+        if (format === Hex) {
+    generateSetHex(difficulty)
+    }
+}
+
+I think what is supposed to make an "easy" set easy is that there is MORE randomness between colors, while a "difficult" set would have LESS random colors 
+HOW TO DO THIS-
+- First, randomly choose a slice of hues/saturation/values (the "width" of the slice depends on difficult)
+- Second, from that slice, generate 6 random colors, and push them to an array
+
+ Hex takes in 3 values, RR, GG, and BB
+EXAMPLE-
+
+ EASY- 
+ >> min = 0, max = 255
+ >> For each value, generate a number between min and max, concatentate values as a string
+ >> The string is a code, push 6 strings to an array to have your set of colors
+ MEDIUM- 
+ >> create slice using min = 0, max = 255
+ 
+ >> wanting to create a slice that covers appx. 70% of the full range (of 0-255) -> picking 180 as being appx 70% of 255 (this matter is not very important, and SHOULD be coded to be change-able)
+ >> 255-180 = 75, meaning that you generate a number between 0 and 75 to create a slice, and randomly situate it between the beginning and the end of the full range, the slice will be 180 units, and if the random number is 0 that slice will begin at the beginning of the range, but a higher number will push it forward if that makes sense
+ >> taking your random digit between 0 and 75, that number becomes the MIN and that number plus 180 becomes your MAX 
+ >> randomly generate three values between MIN and MAX- 
+ >> your three values are concatenated as a string, this is one medium RGB code.
+ >> Do this 6 times, push the codes to an array
+
+ HARD-
+ >> do the same steps as medium, but use 50 rather than 180 (50 is appx. 20% of 255, meaning all RR values will fall within a  slice that covers 20% of the possible values, same with GG and BB) 
+
+DIFFICULTY_LEVELS {
+HARD = 50, 
+MEDIUM = 180,
+EASY = 0
+}
+
+Const TOP_OF_RANGE = 255
+
+generateSetRGB(difficulty) {
+const currentRGBCode = " "
+const MIN = Math.random(0, TOP_OF_RANGE - difficulty) // (meaning, between zero and 255 - 180)
+const MAX = MIN + difficulty
+
+for (let i = 0; i <= 3; i++) {
+let currentNum = math.random(MIN, MAX)
+currentRGBCode.push(currentNum)
+}
+
+return currentRGBCode
+}
+
+generateSetRGB(DIFFICULTY_LEVELS.MEDIUM)
+*/
+
