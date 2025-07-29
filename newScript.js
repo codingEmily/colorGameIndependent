@@ -1,5 +1,5 @@
-import { genColorCodeHex } from "./modules/generatingColorHex.js";
-import { genColorCodeRGB, genSetOfColorsRGB } from './modules/generatingColorRGB.js';
+import { genSetOfColorsHex } from "./modules/generatingColorHex.js";
+import { genSetOfColorsRGB } from './modules/generatingColorRGB.js';
 import { genSetOfColorsHSL } from './modules/generatingColorHSL.js';
 
 import { genRandomNum } from './utils.js'
@@ -33,36 +33,39 @@ window.addEventListener("load", () => {
 })
 
 document.addEventListener("click", e => {   
-    let selectedFormat = form.elements.format.value
-    let selectedDifficulty = form.elements.difficulty.value
     // console.log(selectedDifficulty, selectedFormat)
-
     if (e.target.type ==='radio' || e.target.id === 'next') {
         resetForNewRound()
-        setGame(translateDifficulties(selectedDifficulty))
+        setGame()
     }
 })
 
 
-function setGame(selectedDifficulty) {
+function setGame() {
+    let selectedFormat = form.elements.format.value
+    // console.log("FORMAT: ", selectedFormat)
+    let selectedDifficulty = form.elements.difficulty.value
+
     let randomWinnerId = genRandomNum(1, buttonList.length)
     let id = 0
 
-    const arrayOfColors = fetchColorsByFormatAndLevel(selectedDifficulty)
+    const arrayOfColors = fetchColorsByFormatAndLevel(selectedFormat, selectedDifficulty)
+    // console.log(arrayOfColors)
     buttonList.forEach(button => {
-        id++
         button.setAttribute('data-btn-id', id)
-        button.setAttribute('data-color-code', arrayOfColors[id - 1])
+        // console.log(arrayOfColors)
+        button.setAttribute('data-color-code', arrayOfColors[id])
         
         button.style.backgroundColor = `${button.dataset.colorCode}`
+        id++
 
         if (Number(button.dataset.btnId) == randomWinnerId) {
             winningColorCode.textContent = button.dataset.colorCode
         }
-
         button.addEventListener("click", () => {
             checkCorrect(button, randomWinnerId)
         }) 
+        
     })
     resetForNewRound()
 }
@@ -77,7 +80,7 @@ function resetForNewRound() {
 }
 
 function checkCorrect(button, randomWinnerId) {
-    if ((Number(button.dataset.btnId) == Number(randomWinnerId))) { //important that this be a loose-equal
+    if ((Number(button.dataset.btnId) == Number(randomWinnerId))) {
         handleEndOfRound("Correct", randomWinnerId)
     } else if (Number(button.dataset.btnId) != Number(randomWinnerId)) {
         handleEndOfRound("Wrong", randomWinnerId)
@@ -98,19 +101,18 @@ function handleEndOfRound(result, randomWinnerId) {
     })
 }
 
-function fetchColorsByFormatAndLevel(selectedDifficulty) {
-    // switch (selectedFormat) {
-        // case "rgb":
-        return genSetOfColorsRGB(selectedDifficulty)
-            // return genSetOfColorsRGB(translateDifficulties(selectedDifficulty))    
-        // case "hex":
-        //     return genColorCodeHex(translateDifficulties(selectedDifficulty))
-        // case "hsl":
-        //     return genColorCodeHSL(translateDifficulties(selectedDifficulty))
-        // default:
-        //     alert("Error processing user input for -Format- Section", selectedFormat)
-        //     break;
-    // }
+function fetchColorsByFormatAndLevel(selectedFormat, selectedDifficulty) {
+    switch (selectedFormat) {
+        case "rgb":
+            return genSetOfColorsRGB(translateDifficulties(selectedDifficulty))    
+        case "hex":
+            return genSetOfColorsHex(translateDifficulties(selectedDifficulty))
+        case "hsl":
+            return genSetOfColorsHSL(translateDifficulties(selectedDifficulty))
+        default:
+            alert("Error processing user input for -Format- Section", selectedFormat)
+            break;
+    }
 }
 
 function translateDifficulties(selectedDifficulty) {

@@ -20,9 +20,9 @@ export function genSetOfColorsHSL(rangeDifficulty) {
     return setOfColors
 }
 
-
+const extraSpaceBecOriginalFormulaTooDifficult = .07
 function genSlices(maxRangeByType, rangeDifficulty) {
-    const sizeOfRange =  Math.floor(maxRangeByType * (rangeDifficulty * .01));
+    const sizeOfRange =  Math.floor(maxRangeByType * (rangeDifficulty * .01 + extraSpaceBecOriginalFormulaTooDifficult));
     const restOfRange = maxRangeByType - sizeOfRange;
     const bottomOfRange = genRandomNum(0, restOfRange);
     const topOfRange = bottomOfRange + sizeOfRange;
