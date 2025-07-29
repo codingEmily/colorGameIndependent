@@ -57,6 +57,7 @@ function setGame() {
 
         if (Number(button.dataset.btnId) == randomWinnerId) {
             winningColorCode.textContent = button.dataset.colorCode
+            console.log(randomWinnerId)
         }
         button.addEventListener("click", () => {
             checkCorrect(button, randomWinnerId)
