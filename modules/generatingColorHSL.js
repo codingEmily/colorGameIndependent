@@ -1,6 +1,6 @@
 import { genRandomNum } from '../utils.js'
 
-const TOP_OF_HSL_COLOR_RANGE = 255
+const TOP_OF_HSL_COLOR_RANGE = 360
 const FULL_SAT_AND_VALUE_RANGE = 100
 
 // hsl(146, 75%, 46%)
